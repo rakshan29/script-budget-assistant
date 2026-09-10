@@ -18,22 +18,26 @@ st.set_page_config(
     page_title="Script-to-Budget Assistant", page_icon="🎬", layout="wide"
 )
 
-# --- HIDE STREAMLIT TOOLBAR & MENU FOR PUBLIC VISITORS ---
+# 2. HIDE ALL ACTION BUTTONS EXCEPT THE THREE DOTS MENU
 hide_st_style = """
             <style>
             /* Hide Share Button */
-            [data-testid="stHeaderActionElements"] {
-                display: none;
-            }
-            /* Hide Fork / Edit / GitHub Buttons */
-            button[title="Edit this app"], 
-            a[href*="github.com"], 
-            button[aria-label="Star this app"] {
+            [data-testid="stHeader"] button[aria-label="Share"],
+            [data-testid="stHeader"] [data-testid="stShareButton"] {
                 display: none !important;
             }
-            /* Hide Footer */
+            
+            /* Hide Star / Fork / Edit / GitHub Buttons */
+            [data-testid="stHeader"] button[aria-label="Star this app"],
+            [data-testid="stHeader"] button[title="Edit this app"],
+            [data-testid="stHeader"] a[href*="github.com"],
+            [data-testid="stHeader"] a[aria-label*="GitHub"] {
+                display: none !important;
+            }
+
+            /* Hide Streamlit Footer */
             footer {
-                visibility: hidden;
+                visibility: hidden !important;
             }
             </style>
             """
