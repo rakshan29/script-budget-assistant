@@ -18,30 +18,37 @@ st.set_page_config(
     page_title="Script-to-Budget Assistant", page_icon="🎬", layout="wide"
 )
 
-# 2. HIDE ALL ACTION BUTTONS EXCEPT THE THREE DOTS MENU
-hide_st_style = """
-            <style>
-            /* Hide Share Button */
-            [data-testid="stHeader"] button[aria-label="Share"],
-            [data-testid="stHeader"] [data-testid="stShareButton"] {
-                display: none !important;
-            }
-            
-            /* Hide Star / Fork / Edit / GitHub Buttons */
-            [data-testid="stHeader"] button[aria-label="Star this app"],
-            [data-testid="stHeader"] button[title="Edit this app"],
-            [data-testid="stHeader"] a[href*="github.com"],
-            [data-testid="stHeader"] a[aria-label*="GitHub"] {
-                display: none !important;
-            }
+# Custom CSS to hide top-right toolbar buttons except the main options menu
+hide_toolbar_css = """
+    <style>
+    /* Hide top header decorative elements and toolbar icons */
+    [data-testid="stHeader"] > header {
+        background-color: transparent !important;
+    }
+    
+    /* Target and hide individual toolbar action buttons */
+    [data-testid="stHeader"] [data-testid="stHeaderActionElements"],
+    [data-testid="stHeader"] button[title*="Edit"],
+    [data-testid="stHeader"] button[aria-label*="Star"],
+    [data-testid="stHeader"] a[href*="github.com"],
+    [data-testid="stHeader"] [data-testid="stAppDeployButton"],
+    [data-testid="stHeader"] .stAppHeader {
+        display: none !important;
+    }
 
-            /* Hide Streamlit Footer */
-            footer {
-                visibility: hidden !important;
-            }
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
+    /* Ensure the Three Dots Main Menu remains visible */
+    #MainMenu, [data-testid="stDecoration"] {
+        visibility: visible !important;
+    }
+
+    /* Hide the default Streamlit footer */
+    footer {
+        visibility: hidden !important;
+        height: 0px !important;
+    }
+    </style>
+"""
+st.markdown(hide_toolbar_css, unsafe_allow_html=True)
 # Sidebar - Controls & Script Draft Input
 with st.sidebar:
     st.title("🎬 Pipeline Controls")
