@@ -21,15 +21,20 @@ st.set_page_config(
 # --- HIDE STREAMLIT TOOLBAR & MENU FOR PUBLIC VISITORS ---
 hide_st_style = """
             <style>
-            /* Hide top-right toolbar buttons (Share, Star, Fork/Pencil, Rerun) */
-            [data-testid="stHeader"] {
-                visibility: hidden;
-                height: 0%;
+            /* Hide Share Button */
+            [data-testid="stHeaderActionElements"] {
+                display: none;
             }
-            /* Hide the main menu hamburger icon (if needed) */
-            #MainMenu {visibility: hidden;}
-            /* Hide the "Made with Streamlit" footer */
-            footer {visibility: hidden;}
+            /* Hide Fork / Edit / GitHub Buttons */
+            button[title="Edit this app"], 
+            a[href*="github.com"], 
+            button[aria-label="Star this app"] {
+                display: none !important;
+            }
+            /* Hide Footer */
+            footer {
+                visibility: hidden;
+            }
             </style>
             """
 st.markdown(hide_st_style, unsafe_allow_html=True)
