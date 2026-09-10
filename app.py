@@ -18,45 +18,52 @@ st.set_page_config(
     page_title="Script-to-Budget Assistant", page_icon="🎬", layout="wide"
 )
 
-# --- STRICT CSS TO HIDE TOOLBAR ICONS EXCEPT THREE-DOTS MENU ---
-hide_toolbar_css = """
+import streamlit as st
+
+# Must be the very first Streamlit command
+st.set_page_config(
+    page_title="Script-to-Budget Assistant", page_icon="🎬", layout="wide"
+)
+
+# --- COMPLETE CLEAN APP CSS (Hides Fork, GitHub, Share, Star, and Streamlit Badge) ---
+hide_app_elements = """
     <style>
-    /* 1. Hide the main toolbar action elements container (Share, Star, Edit, GitHub) */
-    div[data-testid="stHeaderActionElements"] {
-        display: none !important;
-    }
-
-    /* 2. Target specific header icons directly as fallbacks */
-    header button[aria-label*="Share"],
-    header button[title*="Edit"],
-    header button[aria-label*="Star"],
-    header a[href*="github.com"],
-    header [data-testid="stAppDeployButton"] {
+    /* 1. Hide the top-right header elements (Fork, GitHub, Share, Star, Pencil) */
+    [data-testid="stHeaderActionElements"],
+    [data-testid="stHeader"] button,
+    [data-testid="stHeader"] a,
+    header[data-testid="stHeader"] {
         display: none !important;
         visibility: hidden !important;
     }
 
-    /* 3. Keep the main header area active so the Three Dots Menu remains visible */
-    [data-testid="stHeader"] {
-        background-color: transparent !important;
-    }
-
-    /* 4. Ensure the Three Dots menu icon button stays visible */
-    [data-testid="stHeader"] button[aria-label="Manage app"],
-    [data-testid="stHeader"] button[id*="MainMenu"],
+    /* 2. Hide the main menu (three dots) if you want a 100% clean app UI */
     #MainMenu {
-        visibility: visible !important;
-        display: inline-flex !important;
+        visibility: hidden !important;
+        display: none !important;
     }
 
-    /* 5. Hide default Streamlit footer */
+    /* 3. Hide the Streamlit footer and bottom floating badge (Crown / Host badge) */
     footer {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    
+    .viewerBadge_container__1QSob,
+    [data-testid="stStatusWidget"],
+    .styles_stateContainer__29P98,
+    #data-testid="stDecoration" {
         display: none !important;
         visibility: hidden !important;
+    }
+
+    /* 4. Remove extra whitespace at the top of the main container */
+    .main .block-container {
+        padding-top: 1rem !important;
     }
     </style>
 """
-st.markdown(hide_toolbar_css, unsafe_allow_html=True)
+st.markdown(hide_app_elements, unsafe_allow_html=True)
 # Sidebar - Controls & Script Draft Input
 with st.sidebar:
     st.title("🎬 Pipeline Controls")
