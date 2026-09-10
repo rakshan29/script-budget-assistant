@@ -18,33 +18,41 @@ st.set_page_config(
     page_title="Script-to-Budget Assistant", page_icon="🎬", layout="wide"
 )
 
-# Custom CSS to hide top-right toolbar buttons except the main options menu
+# --- STRICT CSS TO HIDE TOOLBAR ICONS EXCEPT THREE-DOTS MENU ---
 hide_toolbar_css = """
     <style>
-    /* Hide top header decorative elements and toolbar icons */
-    [data-testid="stHeader"] > header {
-        background-color: transparent !important;
-    }
-    
-    /* Target and hide individual toolbar action buttons */
-    [data-testid="stHeader"] [data-testid="stHeaderActionElements"],
-    [data-testid="stHeader"] button[title*="Edit"],
-    [data-testid="stHeader"] button[aria-label*="Star"],
-    [data-testid="stHeader"] a[href*="github.com"],
-    [data-testid="stHeader"] [data-testid="stAppDeployButton"],
-    [data-testid="stHeader"] .stAppHeader {
+    /* 1. Hide the main toolbar action elements container (Share, Star, Edit, GitHub) */
+    div[data-testid="stHeaderActionElements"] {
         display: none !important;
     }
 
-    /* Ensure the Three Dots Main Menu remains visible */
-    #MainMenu, [data-testid="stDecoration"] {
-        visibility: visible !important;
+    /* 2. Target specific header icons directly as fallbacks */
+    header button[aria-label*="Share"],
+    header button[title*="Edit"],
+    header button[aria-label*="Star"],
+    header a[href*="github.com"],
+    header [data-testid="stAppDeployButton"] {
+        display: none !important;
+        visibility: hidden !important;
     }
 
-    /* Hide the default Streamlit footer */
+    /* 3. Keep the main header area active so the Three Dots Menu remains visible */
+    [data-testid="stHeader"] {
+        background-color: transparent !important;
+    }
+
+    /* 4. Ensure the Three Dots menu icon button stays visible */
+    [data-testid="stHeader"] button[aria-label="Manage app"],
+    [data-testid="stHeader"] button[id*="MainMenu"],
+    #MainMenu {
+        visibility: visible !important;
+        display: inline-flex !important;
+    }
+
+    /* 5. Hide default Streamlit footer */
     footer {
+        display: none !important;
         visibility: hidden !important;
-        height: 0px !important;
     }
     </style>
 """
